@@ -1,103 +1,204 @@
-# prime-node-os
 
-**Prime Node OS** is a local-first AI runtime for sovereign users.
+# Prime Node OS · v0 Lab Build
 
-Run your own AI stack on a laptop, mini-PC, or home server – **no SaaS lock-in, no rented brain**. Prime Node OS puts trap-aware gates and audit agents in front of your model so you keep control of your compute, your data, and your roadmap.
+> Local-first AI runtime **scaffold** for sovereign nodes.  
+> Cold Mirror wired in as the first system agent. Early, experimental, not production-ready.
 
-> **Status:** Early R&D / pre-v0. This repo currently holds docs, design notes, and example layouts for the first single-node release.
+Right now this repo gives you:
 
----
+- A baseline folder tree for a node:
+  - `engine/`, `runtime/`, `schemas/`, `memory/`, `thread/`, `logs/`, `scripts/`, `examples/`
+- Environment check for target hardware (laptop / mini-PC / Pi / Raspberry Pi):
+  - `python scripts/pi_env_check.py`
+- A bridge script that calls **Cold Mirror** as the first system agent:
+  - `python scripts/run_cold_mirror_plan.py --project examples/test/project_dump.txt --intake examples/test/intake.json`
 
-## Why this exists
-
-Right now “AI” mostly means asking a few big companies to think for you on their servers. They own the models, the logs, and eventually the narrative.
-
-Prime Node OS is the opposite direction:
-
-- **Local-first** – your hardware, your keys, your logs.
-- **Trap-aware** – guardrails against scope creep, overreach, and “just one more feature” death spirals.
-- **Bitcoin-funded** – built in a one-man lab, not steered by VC decks.
-- **Mesh-ready** – v0 is a single sovereign node; later versions link those nodes into a peer-to-peer AI mesh.
-
-This repo is the foundation for that first node.
+Prime Node OS is being built in the open.  
+Right now this repo is a **reference scaffold** + scripts, not a full runtime.
 
 ---
 
-## What v0 aims to ship
+## Status
 
-The initial public release (`v0`) is a **single-node reference build**:
-
-- 🧠 **Local AI runtime**  
-  Runs on a laptop, mini-PC, Raspberry Pi, or home server.
-
-- 🛡 **Trap-aware gates**  
-  Request/response filters that catch Overreach, Time Slip, Scope Creep and other builder traps before they become habits.
-
-- 🔍 **Cold Mirror as first audit agent**  
-  Blunt, text-based audits of your plans vs your calendar: what you *say* you'll ship vs what actually fits.
-
-- 📚 **Clean install path + docs**  
-  Step-by-step setup, config examples, and a single-node example you can fork.
-
-- 🔌 **Room for your agents**  
-  A clear place to plug in your own tools and workflows as additional agents.
+- ✅ Folder structure + runtime seed (`scripts/init_prime_node.py`)
+- ✅ Cold Mirror integration script (delegates to working Cold Mirror CLI engine)
+- ✅ Tested end-to-end on a live server with a real `cold_mirror_run.json`
+- 🚧 No full node orchestrator yet
+- 🚧 No one-command installer yet
+- 🚧 No multi-node / P2P logic yet
 
 ---
 
-## Repository layout (current)
+## Repository Layout (v0)
 
-As `v0` comes together, this repo will grow. For now:
-
-- `docs/` – design notes, architecture sketches, and early user docs for the runtime.  
-- `examples/` *(planned)* – example layouts for common environments (laptop, mini-PC, Pi, home server).  
-- `runtime/` *(planned)* – reference implementation of the node runtime and agent wiring.  
-
-If a folder isn’t here yet, it just means it hasn’t shipped. No smoke and mirrors.
-
----
-
-## Roadmap
-
-**Short term (this goal):**
-
-1. Finalize single-node architecture and config format.  
-2. Ship `v0` reference runtime with Cold Mirror wired in as the first audit agent.  
-3. Provide install docs and one working example for a typical builder machine.
-
-**Next steps (after v0):**
-
-- Add more audit / orchestration agents on top of the same runtime.  
-- Begin **node-to-node sync** experiments (sharing vectors, tags, and behavior deltas over encrypted channels).  
-- Explore **phone “neurons”** that sync back to a home / lab node.  
-- Design the primitives for a **Bitcoin-backed AI mesh** (discovery, reputation, payments).
-
----
-
-## Who this is for
-
-- Indie builders who want **their own node**, not just another SaaS account.  
-- Bitcoiners and cypherpunks who actually run their own infrastructure.  
-- Small labs, shops, classrooms and collectives that need **local-first AI** with clear boundaries.
-
-If that’s you, you’re the target user.
+```text
+prime-node-os/
+  docs/
+    overview.md              # high-level notes about Prime Node OS
+  engine/                    # future orchestrator + node logic
+  examples/
+    single_node_example/
+      README.md              # example walkthrough (to be expanded)
+    test/
+      project_dump.txt       # example project description for Cold Mirror
+      intake.json            # example intake schema for Cold Mirror
+  logs/
+  memory/
+  runtime/
+    runtime.yaml             # starter runtime config (lab use)
+  schemas/
+  scripts/
+    init_prime_node.py       # seeds folders + runtime.yaml
+    pi_env_check.py          # prints host env info for Pi / mini-PC
+    run_cold_mirror_plan.py  # calls Cold Mirror CLI, saves run JSON
+  thread/
+  .gitignore
+  LICENSE
+  README.md
+```
 
 ---
 
-## Contributing
+## Quick Start (Lab Use)
 
-Right now the focus is:
+### 1. Clone the repo
 
-- Tightening the architecture for `v0`
-- Writing clear docs and examples
-- Hardening the trap-aware gates and Cold Mirror integration
+```bash
+git clone https://github.com/shamanground/prime-node-os.git
+cd prime-node-os
+```
 
-If you’re interested in contributing (code, docs, testing, or funding), open an issue or reach out via:
+### 2. Seed the folders
 
-- GitHub Issues on this repo  
-- Contact links on [shamanground.com](https://shamanground.com/) *(once live for Prime Node OS)*
+Safe to run more than once:
+
+```bash
+python scripts/init_prime_node.py
+```
+
+This will make sure the baseline folders exist and that `runtime/runtime.yaml` is present.
+
+### 3. Check your environment
+
+This is mostly for logging + Pi/mini-PC targeting:
+
+```bash
+python scripts/pi_env_check.py
+```
+
+You’ll see basic OS + Python info printed to the console.
+
+---
+
+## Wiring in Cold Mirror (Local Integration)
+
+Prime Node OS v0 uses **Cold Mirror** as the first system agent.  
+The `run_cold_mirror_plan.py` script expects this layout on your machine:
+
+```text
+ShamanGround/
+  cold_mirror_v2/            # Cold Mirror CLI engine (separate repo)
+  prime-node-os/             # this repo
+```
+
+Inside `cold_mirror_v2` you should have a working Cold Mirror install that can be run like:
+
+```bash
+python -m cold_mirror.cli.main --help
+```
+
+If that works, you can run the bridge script from inside `prime-node-os`:
+
+```bash
+cd prime-node-os
+
+python scripts/run_cold_mirror_plan.py   --project examples/test/project_dump.txt   --intake examples/test/intake.json
+```
+
+If everything is wired correctly, you’ll see output similar to:
+
+```text
+>>> Using Cold Mirror script at: /path/to/cold_mirror_v2/cold_mirror.py
+>>> Running: python /path/to/cold_mirror_v2/cold_mirror.py --file ...
+>>> Cold Mirror wizard completed.
+```
+
+And a file like this will appear:
+
+```text
+prime-node-os/
+  cold_mirror_run.json
+```
+
+That JSON contains:
+
+- Trap hits by family (e.g., Overreach Trap, Time Slip Trap)
+- Evidence snippets from your project description
+- A 24h / 7d / 30d shipping plan based on your intake
+
+You can feed that into other tools, dashboards, or your own agents.
+
+---
+
+## Notes on Cold Mirror Itself
+
+This repo does **not** contain the full Cold Mirror engine.  
+For that, see the separate Cold Mirror repository and documentation.
+
+Prime Node OS just assumes:
+
+- You have a working Cold Mirror CLI engine in `../cold_mirror_v2/`
+- Your engine is configured with:
+  - A valid `OPENAI_API_KEY` in the environment (or equivalent model setup)
+  - The usual Cold Mirror trap datasets + YAML config
+
+If you can run Cold Mirror directly from its own repo, the integration here should work.
+
+---
+
+## Roadmap (High-Level)
+
+Prime Node OS v0 is intentionally narrow:
+
+1. **Single Node Runtime (lab build)**
+   - Clean folder + config structure for a sovereign AI node
+   - One working system agent (Cold Mirror) wired in via scripts
+   - Clear pattern for adding more agents over time
+
+2. **Orchestrator + CLI**
+   - Node-level process that owns:
+     - intake → agent selection → output routing
+     - simple logging + memory hooks
+   - CLI commands for common flows:
+     - `prime-node audit` (Cold Mirror)
+     - `prime-node run` (future agents)
+
+3. **Multi-Node / P2P (Future)**
+   - Experiments in:
+     - Nodes sharing vector signals and tags
+     - Phones / small devices as roaming neurons
+     - Home servers as somas coordinating long arcs
+
+None of that is promised in this v0 lab build.  
+This repo is the **starting point**.
+
+---
+
+## Contributing / Feedback
+
+Right now this is a one-man lab project. If you want to help:
+
+- Open issues or PRs on:
+  - Folder structure
+  - Script ergonomics
+  - Docs and examples
+- Run the Cold Mirror bridge on your own project and share:
+  - What worked
+  - Where it broke
+  - What you’d want from a real v0 runtime
 
 ---
 
 ## License
 
-This project is released under the **MIT License**. See [`LICENSE`](./LICENSE) for details.
+This project is released under the MIT License. See `LICENSE` for details.

@@ -1,0 +1,26 @@
+Project: Prime Node OS v0 — Single Node
+
+What I want to build:
+- A single-node runtime on one machine (laptop / mini PC / Pi / home server).
+- Trap-aware gates in front of the model.
+- Cold Mirror as the first audit agent for my AI projects.
+
+Who it’s for:
+- Indie builders and small labs who want control over their AI stack.
+- People who are tired of SaaS lock-in and rented brains.
+
+What I want to ship in 24h:
+- A working repo that can run Cold Mirror from inside Prime Node OS.
+- A tiny example that proves “node → Cold Mirror → report” works.
+
+What I want to ship in 7 days:
+- A documented single-node setup guide.
+- A clean v0 architecture doc for Raspberry Pi as the reference box.
+
+What I want to ship in 30 days:
+- A stable v0 single-node runtime people can realistically install and use.
+
+Constraints:
+- Solo builder, limited time and money.
+- Using Python, Git, and my existing server/desktop setup.
+- No fake mesh promises in v0; mesh is roadmap only.

@@ -1,0 +1,36 @@
+{
+  "project_name": "Prime Node OS v0 — Single Node",
+  "artifacts": [
+    {
+      "id": "cli-core",
+      "description": "Prime Node OS command-line entrypoint and scripts to initialize the node and call Cold Mirror."
+    },
+    {
+      "id": "single-node-runtime",
+      "description": "Minimal runtime config and folder structure for a single sovereign node."
+    },
+    {
+      "id": "docs-v0",
+      "description": "Raspberry Pi single-node architecture and install guide."
+    }
+  ],
+  "constraints": {
+    "time_horizon": {
+      "h_24": "Wire Prime Node OS to Cold Mirror and run one real example.",
+      "d_7": "Document repeatable single-node setup.",
+      "d_30": "Harden v0 runtime for early builders."
+    },
+    "budget": "Very low; solo builder, Bitcoin-funded.",
+    "tech_stack": [
+      "Python",
+      "Git",
+      "Raspberry Pi or similar hardware",
+      "Optional: OpenAI or other remote LLM as interim brain"
+    ]
+  },
+  "psychology": {
+    "risk_tolerance": "medium-high",
+    "perfectionism_flag": true,
+    "notes": "Do not chase mesh fantasies in v0; ship the single node."
+  }
+}
