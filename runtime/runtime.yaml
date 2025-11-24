@@ -1,0 +1,16 @@
+# Prime Node OS v0 runtime config
+version: "0.0.1"
+
+node:
+  role: "single-node"
+  platform: "raspberry-pi"
+
+telemetry:
+  enabled: true
+  file: "logs/telemetry.log"
+
+cold_mirror:
+  enabled: true
+  mode: "cli"
+  # path can be 'python -m cold_mirror.cli.wizard' or your own wrapper
+  command: "python -m cold_mirror.cli.wizard"
