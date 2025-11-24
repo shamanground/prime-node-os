@@ -1,11 +1,36 @@
-# prime-node-os
+# Prime Node OS · v0 Lab Build
 
-**Prime Node OS** is a local-first AI runtime for sovereign users.
+> Local-first AI runtime **scaffold** for sovereign nodes.  
+> This is an early lab build, not a polished product.
 
-Run your own AI stack on a laptop, mini-PC, or home server – **no SaaS lock-in, no rented brain**. Prime Node OS puts trap-aware gates and audit agents in front of your model so you keep control of your compute, your data, and your roadmap.
+Right now this repo gives you:
 
-> **Status:** Early R&D / pre-v0. This repo currently holds docs, design notes, and example layouts for the first single-node release.
+- A baseline folder tree for a node:
+  - `engine/`, `runtime/`, `schemas/`, `memory/`, `thread/`, `logs/`, `scripts/`, `examples/`
+- Environment check for target hardware (laptop / mini-PC / Pi):
+  - `python scripts/pi_env_check.py`
+- A bridge script that calls **Cold Mirror** as the first system agent:
+  - `python scripts/run_cold_mirror_plan.py --project examples/test/project_dump.txt --intake examples/test/intake.json`
 
+Prime Node OS is being built in the open.  
+Right now this repo is a **reference scaffold** + scripts, not a full runtime.
+
+## Status
+
+- ✅ Folder structure + runtime seed (`scripts/init_prime_node.py`)
+- ✅ Cold Mirror integration script (delegates to working Cold Mirror CLI engine)
+- ✅ Tested end-to-end on a live server with a real `cold_mirror_run.json`
+- 🚧 No full node orchestrator yet
+- 🚧 No one-command installer
+- 🚧 No multi-node / P2P logic yet
+
+## Quick start (lab use)
+
+Clone the repo:
+
+```bash
+git clone https://github.com/shamanground/prime-node-os.git
+cd prime-node-os
 ---
 
 ## Why this exists
