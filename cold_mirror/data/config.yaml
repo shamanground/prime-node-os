@@ -1,0 +1,25 @@
+version: "2.0.0"
+mask_id: "cold_mirror"
+
+families:
+  # We still group seeds by zodiac_family internally...
+  group_field: "zodiac_family"
+  # ...but we remap those to public-facing Cold Mirror trap families.
+  mapping:
+    Aries: "Overreach Trap"
+    Taurus: "Constraint Denial Trap"
+    Gemini: "Whisper Drift Trap"
+    Cancer: "Audience Collapse Trap"
+    Leo: "Scale Delusion Trap"
+    Virgo: "Perfection Trap"
+    Libra: "Metric Drift Trap"
+    Scorpio: "Intent Mirage Trap"
+    Sagittarius: "Scope Creep Trap"
+    Capricorn: "Priority Collapse Trap"
+    Aquarius: "Time Slip Trap"
+    Pisces: "Clarity Evasion Trap"
+
+report:
+  max_seeds_per_family: 5
+  log_telemetry: true
+  telemetry_file: "cold_mirror_ledger.jsonl"

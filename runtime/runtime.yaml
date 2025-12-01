@@ -1,16 +1,80 @@
-# Prime Node OS v0 runtime config
-version: "0.0.1"
+version: "1.2"
+label: "Prime Node OS — Unified Runtime"
 
-node:
-  role: "single-node"
-  platform: "raspberry-pi"
+paths:
+  project_root: /mnt/data
 
-telemetry:
-  enabled: true
-  file: "logs/telemetry.log"
+  cross_thread_memory:
+    enabled: true
+    sources:
+      - path: /mnt/data/thoth_om_v1/memory
+      - path: /mnt/data/memory
+
+    verify_with_manifest: /mnt/data/memory_fingerprint.json
+    on_mismatch: sever
+
+    precedence:
+      - /mnt/data/memory
+      - /mnt/data/thoth_om_v1/memory
+
+
+context:
+  threshold_profile: default
+
+
+engine:
+  # Thoth OM Core
+  thoth_engine_path: /mnt/data/engine/Thoth_engine_1.0.yaml
+  metatron_catalog_path: /mnt/data/engine/metatron_function.yaml
+  braided_feedback_path: /mnt/data/engine/braided-feedback-function.yaml
+
+  # Trap Dataset (shared with Cold Mirror)
+  trap_seeds_path: /mnt/data/cold_mirror/data/trap_seeds.yaml
+
+  # NEW: Prime Node OS Fusion Engine
+  prime_node_runtime: /mnt/data/engine/prime_node_runtime.py
+
+
+schemas:
+  segments_schema_path: /mnt/data/schemas/segments.schema.json
+
+
+thresholds:
+  path: /mnt/data/engine/thresholds_1.1.yaml
+
+
+harmonizers:
+  path: /mnt/data/engine/harmonizers.extended.yaml
+  allow:
+    - latency_smoothing
+    - tone_equalizer
+    - rhythm_stabilizer
+    - polarity_balancer
+    - jargon_filter
+    - verbosity_normalizer
+    - prompt_binder
+    - safety_guard
+
 
 cold_mirror:
   enabled: true
-  mode: "cli"
-  # path can be 'python -m cold_mirror.cli.wizard' or your own wrapper
-  command: "python -m cold_mirror.cli.wizard"
+  config_path: /mnt/data/cold_mirror/data/config.yaml
+  adapters_path: /mnt/data/cold_mirror/data/adapters.yaml
+  engine_path: /mnt/data/engine/prime_node_runtime.py
+
+
+prime_node:
+  enabled: true
+
+  cold_mirror:
+    engine_path: /mnt/data/engine/prime_node_runtime.py
+    thresholds: /mnt/data/engine/thresholds_1.1.yaml
+    gate_map: /mnt/data/engine/segment_to_gates.yaml
+
+  # LLM / Inference
+  inference_profile: /mnt/data/runtime/inference_profile.yaml
+
+
+telemetry:
+  enabled: true
+  file: /mnt/data/logs/telemetry.log
